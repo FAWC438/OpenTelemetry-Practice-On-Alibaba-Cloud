@@ -108,8 +108,6 @@ _节点列表_
 
 ![Severs.png](https://s2.loli.net/2023/01/29/Qk3pRxSA6TIZyOV.png)
 
-</center>
-
 |  Node Name  | Language |  Instrumentation   |
 | :---------: | :------: | :----------------: |
 | otlp-server |  Golang  |       Manual       |
@@ -117,6 +115,8 @@ _节点列表_
 | otlp-flask  |  Python  |        Auto        |
 | otlp-spring |   Java   |        Auto        |
 |  otlp-php   |   PHP    | Auto(not complete) |
+
+</center>
 
 作为链路追踪的部署者（即运维角度），一个链路追踪在企业部署最大的阻力实际上在于其相关代码是否具有侵入性（即实现链路追踪是否需要大幅度更改生产环境源代码），通俗点讲就是开发给不给运维面子，因为本质上链路追踪是一种“苦开发、乐运维”的技术。除非在特细插桩粒度且由 _运维开发_ 进行部署这种特殊情况，否则基本都应考虑自动插桩功能。
 
@@ -140,7 +140,7 @@ Server 节点也是一个利用 Go 编写的节点，同时具有发送和接收
 
 该代码持续监听 7080 端口，同时向 Flask 节点（ http://localhost:5000/test ）、PHP 节点（ http://localhost:8083/ ）和 Spring 节点（ http://localhost:5638/test ）发送请求。请求以一定间隔发送。
 
-与 Client 节点类似，此处采用手动插桩的方式，因此代码量较大，且配置步骤较多。不过可以看出插桩的自定义范围也很广。
+与 Client 节点类似，此处采用手动插桩的方式。
 
 [代码详见此](Go/server/main.go)
 
@@ -201,7 +201,7 @@ java -javaagent:opentelemetry-javaagent.jar \
 
 > 以下操作都在 Linux 环境（WSL）中执行
 
-由于插件需要 PHP 8.0+ 环境，且安装过程较为繁琐，之间使用 PHP 官方镜像安装自动插桩插件并生成 PHP 容器
+由于插件需要 PHP 8.0+ 环境，且安装过程较为繁琐。因此使用 PHP 官方镜像安装自动插桩插件并生成 PHP 容器
 
 [Dockerfile 见此](PHP/Dockerfile)
 
