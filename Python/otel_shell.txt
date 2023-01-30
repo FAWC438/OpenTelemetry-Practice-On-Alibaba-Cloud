@@ -1,0 +1,13 @@
+$h_name = hostname
+
+# powershell 中该变量赋值需要与程序执行分开为两条命令
+
+opentelemetry-instrument `
+--traces_exporter otlp_proto_grpc  `
+--metrics_exporter none `
+--resource_attributes host.name=$h_name `
+--service_name otlp-flask `
+--exporter_otlp_endpoint http://tracing-analysis-dc-hz.aliyuncs.com:8090 `
+--exporter_otlp_headers "Authentication=<你的阿里云 grpc token>" `
+--exporter_otlp_insecure true `
+python app_pure.py
